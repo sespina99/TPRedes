@@ -14,3 +14,7 @@ variable "instance_type" {
   type        = string
   default     = "t2.micro"
 }
+variable "security_groups" {
+  description = "List of security group IDs for the EC2 instances"
+  type        = list(string)
+}
