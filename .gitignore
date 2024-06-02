@@ -2,3 +2,17 @@
 aws/terraform/organization/.terraform.lock.hcl
 aws/terraform/organization/.terraform/providers/registry.terraform.io/hashicorp/aws/4.67.0/windows_amd64/terraform-provider-aws_v4.67.0_x5.exe
 aws/terraform/organization/.terraform/modules/modules.json
+
+aws/terraform/organization/terraform.tfstate.backup
+
+aws/terraform/organization/terraform.tfstate
+
+huawei/modules/vpc/.terraform.lock.hcl
+
+huawei/modules/vpc/.terraform/providers/registry.terraform.io/huaweicloud/huaweicloud/1.64.2/windows_amd64/CHANGELOG.md
+
+huawei/modules/vpc/.terraform/providers/registry.terraform.io/huaweicloud/huaweicloud/1.64.2/windows_amd64/LICENSE
+
+huawei/modules/vpc/.terraform/providers/registry.terraform.io/huaweicloud/huaweicloud/1.64.2/windows_amd64/README.md
+
+huawei/modules/vpc/.terraform/providers/registry.terraform.io/huaweicloud/huaweicloud/1.64.2/windows_amd64/terraform-provider-huaweicloud_v1.64.2.exe

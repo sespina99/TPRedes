@@ -1,9 +1,10 @@
 resource "aws_instance" "web" {
   count = length(var.subnet_ids)
 
-  ami           = var.ami_id
-  instance_type = var.instance_type
-  subnet_id     = element(var.subnet_ids, count.index)
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
+  subnet_id              = element(var.subnet_ids, count.index)
+  vpc_security_group_ids = var.security_groups
 
   tags = {
     Name = "Web Server ${count.index}"
@@ -19,14 +20,8 @@ resource "aws_instance" "web" {
 
 }
 
-resource "aws_security_group" "web" {
-  name        = "web_security_group"
-  description = "Allow HTTP traffic"
-
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+resource "aws_eip" "eip" {
+  count    = length(aws_instance.web)
+  instance = aws_instance.web[count.index].id
+  vpc      = true
 }
