@@ -18,27 +18,27 @@ variable "vpc_cidr_block" {
 
 variable "domain_name" {
   description = "Domain name registered for Application"
-  default = "redes-demo.me"
+  default     = "tech-demo.tech"
 }
 
 variable "ttl" {
   description = "TTL of Record"
-  default = "10"
+  default     = "10"
 }
 
 variable "primaryhealthcheck" {
   description = "Tag Name for Primary Instance Health Check"
-  default = "route53-primary-health-check"
+  default     = "route53-primary-health-check"
 }
 
 variable "secondaryhealthcheck" {
   description = "Tag Name for Secondary Instance Health Check"
-  default = "route53-secondary-health-check"
+  default     = "route53-secondary-health-check"
 }
 
 variable "subdomain" {
   description = "Sub Domain name to access Application"
-  default = "test"
+  default     = "www.tech-demo.tech"
 }
 
 variable "identifier1" {

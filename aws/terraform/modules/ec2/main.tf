@@ -1,8 +1,8 @@
 resource "aws_instance" "web" {
   count = length(var.subnet_ids)
 
-  ami                    = var.ami_id
-  instance_type          = var.instance_type
+  ami                    = "ami-0e001c9271cf7f3b9"
+  instance_type          = "t2.micro"
   subnet_id              = element(var.subnet_ids, count.index)
   vpc_security_group_ids = var.security_groups
 
@@ -12,16 +12,17 @@ resource "aws_instance" "web" {
 
   user_data = <<-EOF
               #!/bin/bash
-              echo "Hello, World" > /var/www/html/index.html
-              sudo yum install -y httpd
-              sudo systemctl start httpd
-              sudo systemctl enable httpd
+              apt-get update
+              apt-get install nginx -y
+              systemctl start nginx
+              systemctl enable nginx
+              echo "<h1>Hello, World! subnet: ${count.index}</h1>" > /var/www/html/index.html
+              systemctl restart nginx
               EOF
-
 }
 
-resource "aws_eip" "eip" {
+resource "aws_eip" "this" {
   count    = length(aws_instance.web)
-  instance = aws_instance.web[count.index].id
   vpc      = true
+  instance = aws_instance.web[count.index].id
 }

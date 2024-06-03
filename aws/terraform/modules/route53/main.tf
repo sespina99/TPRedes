@@ -4,7 +4,7 @@ resource "aws_route53_zone" "main" {
 
 resource "aws_route53_record" "primary" {
   zone_id = aws_route53_zone.main.zone_id
-  name    = var.subdomain
+  name    = "www"
   type    = "A"
   ttl     = var.ttl
 
@@ -19,7 +19,7 @@ resource "aws_route53_record" "primary" {
 
 resource "aws_route53_record" "secondary" {
   zone_id = aws_route53_zone.main.zone_id
-  name    = var.subdomain
+  name    = "www"
   type    = "A"
   ttl     = var.ttl
 
@@ -33,12 +33,12 @@ resource "aws_route53_record" "secondary" {
 }
 
 resource "aws_route53_health_check" "primary" {
-  fqdn = "${var.domain_name}"
+  ip_address        = var.primaryip
   port              = 80
   type              = "HTTP"
   resource_path     = "/"
-  failure_threshold = "2"
-  request_interval  = "30"
+  failure_threshold = "1"
+  request_interval  = "10"
 
   tags = {
     Name = "route53-primary-health-check"
@@ -50,8 +50,8 @@ resource "aws_route53_health_check" "secondary" {
   port              = 80
   type              = "HTTP"
   resource_path     = "/"
-  failure_threshold = "2"
-  request_interval  = "30"
+  failure_threshold = "1"
+  request_interval  = "10"
 
   tags = {
     Name = "route53-secondary-health-check"
