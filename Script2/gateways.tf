@@ -4,7 +4,7 @@ resource "aws_internet_gateway" "gw" {
 
 resource "aws_eip" "redes_eip_a" {
   depends_on = [aws_internet_gateway.gw]
-  domain = "vpc"
+  domain     = "vpc"
   tags = {
     Name = "eip_for_NAT_a"
   }
@@ -22,7 +22,7 @@ resource "aws_nat_gateway" "nat_a" {
 
 resource "aws_eip" "redes_eip_b" {
   depends_on = [aws_internet_gateway.gw]
-  domain = "vpc"
+  domain     = "vpc"
   tags = {
     Name = "eip_for_NAT_b"
   }

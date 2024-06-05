@@ -7,12 +7,12 @@ resource "aws_lb" "redes_lb" {
   depends_on         = [aws_internet_gateway.gw]
 }
 
-resource "aws_lb_target_group" "alb_tg" { 
+resource "aws_lb_target_group" "alb_tg" {
   name     = "tf-lb-alb-tg"
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
-  
+
 }
 
 resource "aws_lb_listener" "front_end" {

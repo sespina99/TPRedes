@@ -14,10 +14,6 @@ variable "secondaryhealthcheck" {
   description = "Tag Name for Secondary Instance Health Check"
 }
 
-variable "subdomain" {
-  description = "Sub Domain name to access Application"
-}
-
 variable "identifier1" {
 }
 
