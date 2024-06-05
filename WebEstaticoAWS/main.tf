@@ -1,24 +1,20 @@
-locals {
-  s3_bucket_name = "website-test-bucket-redes-grupo25"
-  base_domain    = "redes-grupo25.com.ar"
-}
-
-resource "aws_route53_zone" "primary" {
-  name = local.base_domain
+#DNS route53 zone
+data "aws_route53_zone" "primary" {
+  name = var.domain_name
 }
 
 #ACM
 module "acm" {
   source = "./modules/acm"
 
-  base_domain = local.base_domain
-  zone_id     = aws_route53_zone.primary.zone_id
+  base_domain = var.domain_name
+  zone_id     = data.aws_route53_zone.primary.zone_id
 }
 
 #HOSTED ZONE AND ACM CREATED, NOW CLOUDFRONT AND S3 BUCKET
 
 resource "aws_s3_bucket" "main" {
-  bucket = local.s3_bucket_name
+  bucket = var.s3_bucket_name
 }
 
 resource "aws_s3_bucket_ownership_controls" "main" {
@@ -42,7 +38,7 @@ resource "aws_s3_bucket_website_configuration" "main" {
 }
 
 resource "aws_cloudfront_distribution" "main" {
-  aliases             = [local.base_domain, "www.${local.base_domain}"]
+  aliases             = [var.domain_name, "www.${var.domain_name}"]
   default_root_object = "index.html"
   enabled             = true
   is_ipv6_enabled     = true
@@ -109,9 +105,9 @@ resource "aws_s3_bucket_policy" "main" {
 }
 
 resource "aws_route53_record" "main" {
-  name    = local.base_domain
+  name    = var.domain_name
   type    = "A"
-  zone_id = aws_route53_zone.primary.zone_id
+  zone_id = data.aws_route53_zone.primary.zone_id
 
 
   alias {
@@ -121,17 +117,28 @@ resource "aws_route53_record" "main" {
   }
 }
 
+resource "aws_route53_record" "www" {
+  zone_id = data.aws_route53_zone.primary.zone_id
+  name    = "www.${var.domain_name}"
+  type    = "CNAME"
+  ttl     = 600
+  records = ["${var.domain_name}"]
+  depends_on = [
+    aws_route53_record.main
+  ]
+}
+
 
 resource "aws_s3_object" "index" {
-  bucket = aws_s3_bucket.main.bucket
-  key = "index.html"
-  source = "index.html"
+  bucket       = aws_s3_bucket.main.bucket
+  key          = "index.html"
+  source       = "index.html"
   content_type = "text/html"
 }
 
 resource "aws_s3_object" "error" {
-  bucket = aws_s3_bucket.main.bucket
-  key = "error.html"
-  source = "error.html"
+  bucket       = aws_s3_bucket.main.bucket
+  key          = "error.html"
+  source       = "error.html"
   content_type = "text/html"
 }
