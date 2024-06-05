@@ -40,7 +40,7 @@ Mac/Linux:
 ```
 Windows:
 ```
-C:\Users\username\\.aws\credentials
+C:\Users\username\.aws\credentials
 ```
 
 Si se encuentra en <b>AWS</b>, se debe crear un usuario en AWS con permisos de administrador y obtener las credenciales de este usuario. Podrá consultar si estan correctamente configurados a partir de:
@@ -69,7 +69,7 @@ Si se encuentra dentro de <b>GCP</b>
 
 ### Uso de terraform
 
-En cada carpeta se va a encontrar con un el requerimiento de proveedor a utilizar:
+En cada carpeta se va a encontrar con el requerimiento de proveedor a utilizar:
 
 ```
 terraform {
@@ -94,11 +94,11 @@ terraform {
 
 ### Crear archivos .tf
 
-Para la creación y organización de un script, se va a requerir de un <b>main</b> principal, donde estara declaro lo anterior mencionado y luego los componentes requeridos
+Para la creación y organización de un script, se va a requerir de un <b>main</b> principal, donde estara declarado lo anterior mencionado y luego los componentes requeridos
 
 - Organización en modulos
 
-Se puede optar por tener una carpeta separada de modulos, donde se tendra separada en carpetas cada compenente utilizado, de la siguiente manera:
+Se puede optar por tener una carpeta separada en modulos, donde se separara en carpetas cada compenente utilizado, de la siguiente manera:
 
     |_main.tf
     |_modules
@@ -107,7 +107,7 @@ Se puede optar por tener una carpeta separada de modulos, donde se tendra separa
             |_output.tf
             |_variables.tf
 
-Este formato ayuda a la organización donde encontrar, modificar o buscar datos necesarios a utilizar en el componente, en cada archivo podrán encontrar
+Este formato ayuda a la organización para poder encontrar, modificar o buscar datos necesarios a utilizar en el componente, en cada archivo podrán encontrar
 main: Definición del funcionamiento general del componente, para utilizar los valores de entrada definidos en "variables" se tendrá que utilizar "var.name_variable".
 outputs: Variables de salida
 variables: Variables de entrada
