@@ -63,7 +63,7 @@ resource "google_compute_global_address" "website" {
 }
 
 data "google_dns_managed_zone" "gcp_grupo25_dev" {
-  name = "gcp-grupo-25-com"
+  name = var.domain_name
 }
 
 # Add the IP to the DNS
