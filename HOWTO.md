@@ -282,7 +282,7 @@ Es necesario esperar a que se haga el cambio de los nameservers para luego poder
 En el proyecto se realizaron las siguientes aplicaciones, podrá reutilizar las soluciones implementadas en el proyecto. 
 
 
-![huawei-network-deploy](./diagramas/huawei_network_deploy.png)
+![huawei-network-deploy](./diagramas/huawei_network_deploy.jpeg)
 
 ![high-availability](./diagramas/HighAvailability.png)
 
