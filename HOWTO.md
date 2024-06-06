@@ -205,7 +205,7 @@ A continuación se presenta la lista de los módulos utilizados en el proyecto. 
 AWS:
 
 - <b>Route 53:</b> Utilizado para generar los registros de DNS necesarios para exponer la CDN.
-- <b>S3:</b> Utilizado para servir el frontend de la aplicación (bucket <i>www.</i>, <i>redes.com</i>).
+- <b>S3:</b> Utilizado para servir el frontend de la aplicación.
 - <b>CloudFront:</b> Utilizado para recibir las requests del Route 53 y servirle el frontend de la aplicación al usuario. Con esto se logra que el s3 de la website estática solo puede ser accedido desde el cloudfront.
 - <b>VPC:</b> Utilizado para crear una red virtual en la arquitectura que contiene las capas de aplicación y base de datos del proyecto, junto con todas sus componentes (subnets, cidrs, etc).
 - <b>EC2:</b> Utilizado para ejecutar las instancias del sitio web. En este proyecto, se configuraron algunas instancias EC2 en un Auto Scaling Group (ASG) para asegurar alta disponibilidad y escalabilidad automática basada en la demanda de tráfico.
@@ -223,6 +223,50 @@ Huawei Cloud:
 - <b>ECS:</b> Utilizado para ejecutar las instancias del sitio web. 
 - <b>ELB:</b> Utilizado para distribuir automáticamente el tráfico de red entrante entre múltiples instancias de ECS.
 
+
+## Deploy de Sitio Web Estático
+### AWS
+#### Arquitectura
+![static-aws](./diagramas/AWSStaticWebsite.png)
+#### Requisitos
+Se requiere tener un dominio propio.
+#### Pasos
+- <b>Zona DNS:</b> Este es el primer paso ya que se requiere de tener la zona dns para poder luego verificar el certificado SSL, esta parte requiere hacer cosas fuera de terraform.
+
+Pararse en la carpeta Route53Zone ver las variables del archivo tfvars en esa carpeta y modificarlas para poner su nombre de dominio.  y correr el init y el apply.
+  
+  
+Una vez que se deployó la Hosted Zone, uno debe entrar al servicio de Route 53 en la consola de AWS, seleccionar la hosted Zone creada y copiar los records NS.
+Una vez copiados ir a donde sea que tiene su domino registrado y registrarle a su dominio los nameservers por los que copió.
+
+Es necesario esperar a que se haga el cambio de los nameservers para luego poder validar el certificado SSL, esto dependiendo el servicio que utilizó para el domino puede tardar hasta unas 24 horas.
+
+- <b>Deploy del Web Estático:</b> Como ya está creada la zona dns, se puede pasar a deployear lo demás. Parándose en la carpeta de WebEstáticoAWS, correr el init y el apply, importante en el tfvars poner el mismo nombre de domino que se utilizó para crear la Hosted Zone.
+
+#### Servicios Deployeados
+- <b>Route 53</b> Zona DNS
+- <b>Cloudfront:</b> Utilizado para cachear la página web y para que el sitio sea servido por https.
+- <b>ACM:</b> Sertificado SSL para el domino.
+- <b>S3:</b> Bucket para almacenar el contenido del sitio web. Importante que el bucket es privado pero tiene la policy para que solo pueda ser accedidio desde cloudfront, de esta manera podemos monitorear el tráfico. 
+
+### GCP
+#### Arquitectura
+![static-gcp](./diagramas/StaticGCP.webp)
+
+#### Pasos
+- <b>Dominio:</b>El primer paso es registrar un domino en la consola de gcp en el servicio de Cloud Domains.
+
+- <b>Deploy del Web Estático:</b> Al registrar el domino en google cloud se crea automáticamente la zona DNS, por lo que se puede pasar a deployear el web estatico. Parándose en la carpeta de WebEstáticoGCP, correr el init y el apply, importante en el tfvars poner el mismo nombre de domino que se utilizó para registrar el domino en Cloud Domains y también especificar el nombre del proyecto donde quiere deployear los servicios.
+
+#### Servicios Deployeados
+- <b>Cloud DNS:</b> Zona DNS
+- <b>Cloud Storage:</b> Bucket para almacenar el contenido del sitio web.
+- <b>Cloud CDN:</b> Para activar la CDN se habilitó un google compute storage bucket, que apunta al bucket de la web estatica. A este bucjket se le habilitó la opción de CDN.
+- <b>Cloud Load Balancing:</b> Con el uso de un google compute https proxy se logra que el dominio sea servido por https. Este utiliza un google compute url map que redirige el tráfico al bucket de la web estatica. Se utiliza el proxy con una global forwarding rule que redirige el tráfico para que sea https.
+
+
+
+
 ### Diagrama de arquitectura
 
 En el proyecto se realizaron las siguientes aplicaciones, podrá reutilizar las soluciones implementadas en el proyecto. 
@@ -233,4 +277,3 @@ En el proyecto se realizaron las siguientes aplicaciones, podrá reutilizar las 
 ![high-availability](./diagramas/HighAvailability.png)
 
 ![huawei-cloud](./diagramas/HuaweiCloud.jpg)
-
