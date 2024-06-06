@@ -237,7 +237,9 @@ Huawei Cloud:
 ### Scripts disponibles
 Dentro de este repositorio van a poder encontrar distintos scripts para levantar las distintas infraestructuras solicitadas en la consigna. Se podrá visualizar el diagramada en la sección "Diagrama de arquitectura". En cada carpeta podremos encontrar los siguientes scripts:
 
-- <b>aws</b>: dentro de esta carpeta se puede encontrar dos scripts diferentes. El primer script ubicado en la carpeta "network_deploy" hara el deploy de una red en aws, esto consiste en una vpc con subredes tanto publicas como privadas en su interior. El segundo script ubicado en la carpeta "active-passive" realizara el deploy de un ambiente activo pasivo manejado por el servicio de dns Route 53. Los diagramas de arquitectura para cada configuracion se podran encontrar al final de este documento
+- <b>aws</b>: dentro de esta carpeta se puede encontrar dos scripts diferentes. El primer script ubicado en la carpeta "network_deploy" hara el deploy de una red en aws, esto consiste en una vpc con subredes tanto publicas como privadas en su interior. El segundo script ubicado en la carpeta "active-passive" realizara el deploy de un ambiente activo pasivo manejado por el servicio de dns Route 53. Los diagramas de arquitectura para cada configuracion se podran encontrar al final de este documento. Para que el deploy activo-pasivo funcione es necesario que una vez levantada la infraestructura, se cambien los nameservers de un dominio propio por los de aws que provee la public hosted zone. De otra forma, el dns no sabra direccionar el dominio hacia la arquitectura de aws.
+
+![dns-transfer](./diagramas/nameservers_transfers.png)
 
 - <b>huawei</b>: dentro de esta carpeta se podra encontrar 2 scripts. El primero ubicado en la carpeta network_deploy levantar una red en Huawei Cloud mientras que la segunda carpeta llamada high-availability levantar una vpc con subredes multi AZ y webservers en cada subred cuyo trafico es manejado por un load balancer.
 
@@ -286,8 +288,11 @@ Es necesario esperar a que se haga el cambio de los nameservers para luego poder
 Para tener un mejor entendimiento de los scripts disponibles, se realizaron los siguientes driagramas, así podrá reutilizar las soluciones implementadas en el proyecto.
 
 ### AWS
+### Solucion Deploy de una Red
 
-### Solución Deploy de una Red
+![network_deploy_aws](./diagramas/network_deploy_aws.png)
+
+### Solución Alta Disponibilidad
 
 ![high-availability](./diagramas/HighAvailability.png)
 

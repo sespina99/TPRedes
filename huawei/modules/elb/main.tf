@@ -49,12 +49,12 @@ resource "huaweicloud_elb_l7policy" "this" {
 }
 
 resource "huaweicloud_elb_pool" "backend_server_group" {
-  name            = "terraform-demo-pool"
-  protocol        = "HTTP"
-  lb_method       = "ROUND_ROBIN"
-  type            = "instance"
-  vpc_id          = var.vpc_id
-  loadbalancer_id = huaweicloud_elb_loadbalancer.main.id
+  name               = "terraform-demo-pool"
+  protocol           = "HTTP"
+  lb_method          = "ROUND_ROBIN"
+  type               = "instance"
+  vpc_id             = var.vpc_id
+  loadbalancer_id    = huaweicloud_elb_loadbalancer.main.id
   slow_start_enabled = false
 }
 
