@@ -215,21 +215,35 @@ AWS:
 - <b>EC2:</b> Utilizado para ejecutar las instancias del sitio web. En este proyecto, se configuraron algunas instancias EC2 en un Auto Scaling Group (ASG) para asegurar alta disponibilidad y escalabilidad automática basada en la demanda de tráfico.
 - <b>Internet Gateway:</b> Utilizado para permitir que los recursos dentro de la VPC tengan acceso a internet y también puedan recibir tráfico desde internet. 
 - <b>NAT Gateway:</b> Utilizado para permitir que las instancias en subnets privadas puedan acceder a internet de manera segura sin exponer sus direcciones IP privadas. 
+- <b>ACM:</b> Certificado SSL para el dominio del sitio web estatico.
+
 
 GCP:
 
-- <b>Storage Bucket:</b> Utilizado para almacenar el frontend del sitio web (bucket <i>www.</i>, <i>redes.com</i>). 
-- <b>Google Compute Engine:</b> Utilizado para la configuración del balanceador de carga, CDN y certificados
-- <b>Google Cloud DNS:</b> Utilizado para generar los registros de DNS.
+- <b>Cloud Storage:</b> Utilizado para almacenar el frontend del sitio web (bucket <i>www.</i>, <i>redes.com</i>). 
+- <b>Cloud DNS:</b> Utilizado para generar los registros de DNS.
+- <b>Cloud CDN:</b> Para activar la CDN se habilitó un google compute storage bucket, que apunta al bucket de la web estatica. A este bucjket se le habilitó la opción de CDN.
+- <b>Cloud Load Balancing:</b> Con el uso de un google compute https proxy se logra que el dominio sea servido por https. Este utiliza un google compute url map que redirige el tráfico al bucket de la web estatica. Se utiliza el proxy con una global forwarding rule que redirige el tráfico para que sea https.
+
 
 Huawei Cloud:
 - <b>VPC:</b> Utilizado para crear una red virtual en la arquitectura que contiene las capas de aplicación y base de datos del proyecto, junto con todas sus componentes (subnets, cidrs, etc).
 - <b>ECS:</b> Utilizado para ejecutar las instancias del sitio web. 
 - <b>ELB:</b> Utilizado para distribuir automáticamente el tráfico de red entrante entre múltiples instancias de ECS.
+
+
 ### Scripts disponibles
 Dentro de este repositorio van a poder encontrar distintos scripts para levantar las distintas infraestructuras solicitadas en la consigna. En cada carpeta podremos encontrar los siguientes scripts:
-- <b>aws</b>: dentro de esta carpeta se pueden encontrar dos scripts diferentes. El primer script ubicado en la carpeta "network_deploy" hara el deploy de una red en aws, esto consiste en una vpc con subredes tanto publicas como privadas en su interior. El segundo script ubicado en la carpeta "active-passive" realizara el deploy de un ambiente activo pasivo manejado por el servicio de dns Route 53. Los diagramas de arquitectura para cada configuracion se podran encontrar al final de este documento
-- <b>huawei</b>: dentro de esta carpeta se podran encontrar 2 scripts. El primero ubicado en la carpeta network_deploy levantar una red en Huawei Cloud mientras que la segunda carpeta llamada high-availability levantar una vpc con subredes multi AZ y webservers en cada subred cuyo trafico es manejado por un load balancer.
+- <b>aws</b>: dentro de esta carpeta se puede encontrar dos scripts diferentes. El primer script ubicado en la carpeta "network_deploy" hara el deploy de una red en aws, esto consiste en una vpc con subredes tanto publicas como privadas en su interior. El segundo script ubicado en la carpeta "active-passive" realizara el deploy de un ambiente activo pasivo manejado por el servicio de dns Route 53. Los diagramas de arquitectura para cada configuracion se podran encontrar al final de este documento
+
+- <b>huawei</b>: dentro de esta carpeta se podra encontrar 2 scripts. El primero ubicado en la carpeta network_deploy levantar una red en Huawei Cloud mientras que la segunda carpeta llamada high-availability levantar una vpc con subredes multi AZ y webservers en cada subred cuyo trafico es manejado por un load balancer.
+
+- <b>high availability</b>: dentro de esta carpeta podrá encontrar un script que implementa una VPC con subredes distribuidas en múltiples zonas de disponibilidad (multi-AZ). El script también despliega un sitio web sencillo en cada una de estas subredes. Un load balancer que se encarga de gestionar el tráfico entrante, garantizando que si una de las instancias o zonas de disponibilidad falla, el tráfico se redirija a las instancias disponibles restantes. Esto asegura que el sitio web mantenga su disponibilidad y rendimiento óptimo incluso en caso de fallos en alguna parte de la infraestructura.
+  
+  Se podrá visualizar el diagramada en la sección "Diagrama de arquitectura", como "Solución Alta Disponibilidad"
+
+- <b>high availability</b>
+
 
 
 ## Deploy de Sitio Web Estático
@@ -251,12 +265,6 @@ Es necesario esperar a que se haga el cambio de los nameservers para luego poder
 
 - <b>Deploy del Web Estático:</b> Como ya está creada la zona dns, se puede pasar a deployear lo demás. Parándose en la carpeta de WebEstáticoAWS, correr el init y el apply, importante en el tfvars poner el mismo nombre de domino que se utilizó para crear la Hosted Zone.
 
-#### Servicios Deployeados
-- <b>Route 53</b> Zona DNS
-- <b>Cloudfront:</b> Utilizado para cachear la página web y para que el sitio sea servido por https.
-- <b>ACM:</b> Sertificado SSL para el domino.
-- <b>S3:</b> Bucket para almacenar el contenido del sitio web. Importante que el bucket es privado pero tiene la policy para que solo pueda ser accedidio desde cloudfront, de esta manera podemos monitorear el tráfico. 
-
 ### GCP
 #### Arquitectura
 ![static-gcp](./diagramas/StaticGCP.webp)
@@ -266,22 +274,34 @@ Es necesario esperar a que se haga el cambio de los nameservers para luego poder
 
 - <b>Deploy del Web Estático:</b> Al registrar el domino en google cloud se crea automáticamente la zona DNS, por lo que se puede pasar a deployear el web estatico. Parándose en la carpeta de WebEstáticoGCP, correr el init y el apply, importante en el tfvars poner el mismo nombre de domino que se utilizó para registrar el domino en Cloud Domains y también especificar el nombre del proyecto donde quiere deployear los servicios.
 
-#### Servicios Deployeados
-- <b>Cloud DNS:</b> Zona DNS
-- <b>Cloud Storage:</b> Bucket para almacenar el contenido del sitio web.
-- <b>Cloud CDN:</b> Para activar la CDN se habilitó un google compute storage bucket, que apunta al bucket de la web estatica. A este bucjket se le habilitó la opción de CDN.
-- <b>Cloud Load Balancing:</b> Con el uso de un google compute https proxy se logra que el dominio sea servido por https. Este utiliza un google compute url map que redirige el tráfico al bucket de la web estatica. Se utiliza el proxy con una global forwarding rule que redirige el tráfico para que sea https.
 
 
+## Diagramas de arquitectura
+
+Para tener un mejor entendimiento de los scripts disponibles, se realizaron los siguientes driagramas, así podrá reutilizar las soluciones implementadas en el proyecto.
+
+### AWS
+
+### Solución Deploy de una Red
+
+![network_deploy]()
 
 
-### Diagrama de arquitectura
-
-En el proyecto se realizaron las siguientes aplicaciones, podrá reutilizar las soluciones implementadas en el proyecto. 
-
-
-![multi-region](./diagramas/MultiRegion.png)
+### Solución Alta Disponibilidad
 
 ![high-availability](./diagramas/HighAvailability.png)
 
-![huawei-cloud](./diagramas/HuaweiCloud.jpg)
+### Solución Ambiente Activo-Pasivo 
+
+![multi-region](./diagramas/MultiRegion.png)
+
+
+### Huawei
+
+### Solución Deploy de una Red
+
+![network_architecture]()
+
+### Solución Alta Disponibilidad
+
+![high-availability-huawei](./diagramas/NetworkArchitecture.jpg)
