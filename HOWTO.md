@@ -62,8 +62,13 @@ $ exportar HW_ACCESS_KEY="mi-clave-de-acceso"
 $ exportar HW_SECRET_KEY="mi-clave-secreta"
 ```
 
-Si se encuentra dentro de <b>GCP</b> 
+Si se encuentra dentro de <b>GCP</b> debe crearse un usuario de GCP con su cuenta de google. Una vez creada su cuenta, la forma más segura de correr terraform con gcp desde su máquina local es descargando gcp.
+Una vez descargado gcp correr el siguiente comando en la terminal:
 
+```
+gcloud auth application-default login
+```
+Este comando abrirá una ventana en su navegador para que pueda iniciar sesión con su cuenta de google y su estación de trabajo quedará autenticada para correr terraform con gcp.
 
 ## Instrucciones
 
