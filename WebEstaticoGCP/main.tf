@@ -1,18 +1,18 @@
 provider "google" {
-  project = "regal-extension-425019-n0"
+  project = var.proyect
   region  = "us-central1"
   zone    = "us-central1-c"
 }
 
 provider "google-beta" {
-  project = "regal-extension-425019-n0"
+  project = var.proyect
   region  = "us-central1"
   zone    = "us-central1-c"
 }
 
 resource "google_storage_bucket" "website" {
   provider = google
-  name     = "grupo25-website"
+  name     = var.bucket_name
   location = "US"
 
   website {
