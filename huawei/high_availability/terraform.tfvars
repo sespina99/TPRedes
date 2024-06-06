@@ -1,0 +1,5 @@
+vpc_name = "vpc_high_availability"
+vpc_cidr_block = "10.0.0.0/16"
+huawei_region = "la-south-2"
+huawei_access_key_id = "AKIAIOSFOD"
+huawei_secret_key = "wJalrXUtnFEMI/K7MDENG/bPxRfiCY"
