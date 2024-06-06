@@ -8,14 +8,14 @@ terraform {
 }
 
 provider "aws" {
-  region  = "us-east-1"
+  region  = var.vpc_region
   profile = "default"
 }
 
 module "vpc" {
   source = "./modules/vpc"
 
-  vpc_name = "VPC-Redes"
+  vpc_name = var.vpc_name
 }
 
 module "gateways" {
