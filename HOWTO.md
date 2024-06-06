@@ -233,23 +233,26 @@ Huawei Cloud:
 
 
 ### Scripts disponibles
-Dentro de este repositorio van a poder encontrar distintos scripts para levantar las distintas infraestructuras solicitadas en la consigna. En cada carpeta podremos encontrar los siguientes scripts:
+Dentro de este repositorio van a poder encontrar distintos scripts para levantar las distintas infraestructuras solicitadas en la consigna. Se podrá visualizar el diagramada en la sección "Diagrama de arquitectura". En cada carpeta podremos encontrar los siguientes scripts:
+
 - <b>aws</b>: dentro de esta carpeta se puede encontrar dos scripts diferentes. El primer script ubicado en la carpeta "network_deploy" hara el deploy de una red en aws, esto consiste en una vpc con subredes tanto publicas como privadas en su interior. El segundo script ubicado en la carpeta "active-passive" realizara el deploy de un ambiente activo pasivo manejado por el servicio de dns Route 53. Los diagramas de arquitectura para cada configuracion se podran encontrar al final de este documento
 
 - <b>huawei</b>: dentro de esta carpeta se podra encontrar 2 scripts. El primero ubicado en la carpeta network_deploy levantar una red en Huawei Cloud mientras que la segunda carpeta llamada high-availability levantar una vpc con subredes multi AZ y webservers en cada subred cuyo trafico es manejado por un load balancer.
 
 - <b>high availability</b>: dentro de esta carpeta podrá encontrar un script que implementa una VPC con subredes distribuidas en múltiples zonas de disponibilidad (multi-AZ). El script también despliega un sitio web sencillo en cada una de estas subredes. Un load balancer que se encarga de gestionar el tráfico entrante, garantizando que si una de las instancias o zonas de disponibilidad falla, el tráfico se redirija a las instancias disponibles restantes. Esto asegura que el sitio web mantenga su disponibilidad y rendimiento óptimo incluso en caso de fallos en alguna parte de la infraestructura.
+
+- <b>route 53 zone:</b> dentro de esta carpeta podrá encontrar un script, este es el primer paso para poder hostear sitios estaticos, ya que se requiere de tener la zona dns para poder luego verificar el certificado SSL, esta parte requiere hacer cosas fuera de terraform.
+  Una vez que se deployó la Hosted Zone, uno debe entrar al servicio de Route 53 en la consola de AWS, seleccionar la hosted Zone creada y copiar los records NS.
+Una vez copiados ir a donde sea que tiene su domino registrado y registrarle a su dominio los nameservers por los que copió.
   
-  Se podrá visualizar el diagramada en la sección "Diagrama de arquitectura", como "Solución Alta Disponibilidad"
+- <b>web-static-aws</b>:
 
-- <b>high availability</b>
-
-
+- <b>web-static-gcp</b>:
 
 ## Deploy de Sitio Web Estático
 ### AWS
 #### Arquitectura
-![static-aws](./diagramas/AWSStaticWebsite.png)
+
 #### Requisitos
 Se requiere tener un dominio propio.
 #### Pasos
@@ -267,7 +270,7 @@ Es necesario esperar a que se haga el cambio de los nameservers para luego poder
 
 ### GCP
 #### Arquitectura
-![static-gcp](./diagramas/StaticGCP.webp)
+
 
 #### Pasos
 - <b>Dominio:</b>El primer paso es registrar un domino en la consola de gcp en el servicio de Cloud Domains.
@@ -286,7 +289,6 @@ Para tener un mejor entendimiento de los scripts disponibles, se realizaron los 
 
 ![network_deploy]()
 
-
 ### Solución Alta Disponibilidad
 
 ![high-availability](./diagramas/HighAvailability.png)
@@ -295,6 +297,15 @@ Para tener un mejor entendimiento de los scripts disponibles, se realizaron los 
 
 ![multi-region](./diagramas/MultiRegion.png)
 
+### Solución Sitio Web Estatico
+
+![static-aws](./diagramas/AWSStaticWebsite.png)
+
+### GCP
+
+### Solución Sitio Web Estatico
+
+![static-gcp](./diagramas/StaticGCP.webp)
 
 ### Huawei
 
