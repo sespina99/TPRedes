@@ -78,6 +78,8 @@ AWS_SESSION_TOKEN= **
 
 Si se encuentra desde <b>Huawei Cloud</b>, debe crear las llaves  de acceso necesarias. Desde la consola, encontrará el menu "Mis credenciales" en donde podra crear un nuevo par de access_key_id:secret_access_key. Luego de haber creado el par desde la consola se descargara en su PC un archivo "credentials.csv" con las credenciales adentro.
 
+![my-credentials-menu](./diagramas/huawei-MyCredentials.png)
+
 Posteriormente, deberá configurar las siguientes variables de entorno: 
 ```
 $ exportar HW_REGION_NAME="cn-norte-1"
@@ -287,10 +289,6 @@ Para tener un mejor entendimiento de los scripts disponibles, se realizaron los 
 
 ### Solución Deploy de una Red
 
-![network_deploy]()
-
-### Solución Alta Disponibilidad
-
 ![high-availability](./diagramas/HighAvailability.png)
 
 ### Solución Ambiente Activo-Pasivo 
@@ -311,7 +309,7 @@ Para tener un mejor entendimiento de los scripts disponibles, se realizaron los 
 
 ### Solución Deploy de una Red
 
-![network_architecture]()
+![huawei-network-deploy](./diagramas/huawei_network_deploy.jpeg)
 
 ### Solución Alta Disponibilidad
 

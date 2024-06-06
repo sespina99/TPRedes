@@ -55,9 +55,7 @@ resource "huaweicloud_elb_pool" "backend_server_group" {
   type            = "instance"
   vpc_id          = var.vpc_id
   loadbalancer_id = huaweicloud_elb_loadbalancer.main.id
-
   slow_start_enabled = false
-
 }
 
 resource "huaweicloud_elb_member" "this" {

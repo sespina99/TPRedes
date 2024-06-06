@@ -1,26 +1,24 @@
-variable "vpc_name" {
-  type        = string
-  description = "Name of the main vpc of the aplication"
-  default     = "huawei-terraform-vpc"
-}
-
-variable "vpc_cidr_block" {
-  type        = string
-  description = "cidr block for the main vpc of the application"
-}
-
 variable "huawei_region" {
-  type        = string
-  description = "Huawei region in which to deploy the resources"
-  default     = "la-south-2"
+  description = "The region where the resources will be created"
+    type        = string
 }
 
-variable "huawei_access_key_id" {
-  type        = string
-  description = "Huawei access key id credentials"
+variable "vpc_name" {
+  description = "The name of the VPC"
+    type        = string
 }
 
-variable "huawei_secret_key" {
-  type        = string
-  description = "Huawei secret key credentials"
+variable "cidr_block" {
+  description = "The CIDR block of the VPC"
+    type        = string
+}
+
+variable "access_key" {
+    description = "The access key of the Huawei Cloud account"
+        type        = string
+}
+
+variable "secret_key" {
+    description = "The secret key of the Huawei Cloud account"
+        type        = string
 }
