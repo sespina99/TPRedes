@@ -222,7 +222,7 @@ AWS:
 
 GCP:
 
-- <b>Cloud Storage:</b> Utilizado para almacenar el frontend del sitio web (bucket <i>www.</i>, <i>redes.com</i>). 
+- <b>Cloud Storage:</b> Utilizado para almacenar el frontend del sitio web. 
 - <b>Cloud DNS:</b> Utilizado para generar los registros de DNS.
 - <b>Cloud CDN:</b> Para activar la CDN se habilitó un google compute storage bucket, que apunta al bucket de la web estatica. A este bucjket se le habilitó la opción de CDN.
 - <b>Cloud Load Balancing:</b> Con el uso de un google compute https proxy se logra que el dominio sea servido por https. Este utiliza un google compute url map que redirige el tráfico al bucket de la web estatica. Se utiliza el proxy con una global forwarding rule que redirige el tráfico para que sea https.
