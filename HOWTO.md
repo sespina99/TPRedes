@@ -12,6 +12,7 @@ Autores:
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
 - [Terraform](https://www.terraform.io/downloads.html)
+- [GCP CLI](https://cloud.google.com/sdk/docs/install?hl=es-419)
 
 ## Clonar repositorio
 
@@ -33,7 +34,22 @@ o descargar `.zip` desde [github](https://github.com/sespina99/TPRedes)
 
 ## Obtener credenciales
 
-Si se encuentra desde la cuenta <b>Academy de AWS </b>, previamente se deben setear las credenciales correspondientes de AWS en el archivo que podrá encontrar en:
+### AWS
+
+Si se encuentra desde <b>AWS Academy</b>, podrán encontrar las credenciales al inicializar el Learner Lab, luego visualizar "detalles AWS" 
+
+```
+Cloud Access
+
+   AWS CLI:   
+    [default]
+    aws_access_key_id= **ACCESSKEY
+    aws_secret_access_key= **SECRETKEY
+    aws_session_token= **TOKEN
+```
+
+Posteriormente se deben setear las credenciales correspondientes de AWS en el archivo que podrá encontrar en:
+
 Mac/Linux:
 ```
 ~/.aws/credentials
@@ -43,15 +59,22 @@ Windows:
 C:\Users\username\.aws\credentials
 ```
 
-Si se encuentra en <b>AWS</b>, se debe crear un usuario en AWS con permisos de administrador y obtener las credenciales de este usuario. Podrá consultar si estan correctamente configurados a partir de:
+
+Si se encuentra en <b>AWS</b>, se debe crear un usuario en AWS con permisos de administrador, para esto, se dirigirá a Roles, crear un rol. Elegir un rol de administrador para la cuenta iniciada. 
+Configure el nombre del rol y podrá acceder a las credenciales.
+
+
+Podrá consultar si estan correctamente configuradas las credenciales a partir de:
 ```
 aws configure
 ```
 ```
-AWS_ACCESS_KEY_ID=
-AWS_SECRET_ACCESS_KEY=
-AWS_SESSION_TOKEN= 
+AWS_ACCESS_KEY_ID= **
+AWS_SECRET_ACCESS_KEY= **
+AWS_SESSION_TOKEN= **
 ```
+
+### Huawei Cloud
 
 Si se encuentra desde <b>Huawei Cloud</b>, debe crear las llaves  de acceso necesarias. Desde la consola, encontrará en el menú sus credenciales, luego podra crear un Access key a partir de el código de verificación o contraseña.
 
@@ -68,31 +91,48 @@ Una vez descargado gcp correr el siguiente comando en la terminal:
 ```
 gcloud auth application-default login
 ```
-Este comando abrirá una ventana en su navegador para que pueda iniciar sesión con su cuenta de google y su estación de trabajo quedará autenticada para correr terraform con gcp.
+Este comando abrirá una ventana en su navegador para que pueda iniciar sesión con su cuenta de google y su estación de trabajo quedará autenticada para correr terraform con gcp. También es necesario crear o elegir el proyecto de google cloud donde quiere implementar la infraestructura desde la consola de gcp, una vez elegido guardar el id del proyecto para utilizarlo como variable en terraform.
 
 ## Instrucciones
 
 ### Uso de terraform
 
-En cada carpeta se va a encontrar con el requerimiento de proveedor a utilizar:
+En cada carpeta se va a encontrar con el requerimiento de proveedor a utilizar, donde va a tener las siguientes caracteristicas:
+
+- source: Especifica la ubicación del proveedor. 
+- version: Especifica la versión del proveedor que se debe utilizar.
+
+Se tiene los siguientes bloques correspondiente a cada proovedor.
 
 ```
 terraform {
   required_providers {
-
     aws = {
       source  = "hashicorp/aws"
       version = ">= 5.0"
     }
+  }
+}
+```
+
+```
+terraform {
+  required_providers {
     huaweicloud = {
       source = "huaweicloud/huaweicloud"
       version = ">= 1.20.0"
     }
+  }
+}
+```
+
+```
+terraform {
+  required_providers {
     google = {
       source = "hashicorp/google"
       version = ">= 4.0.0"
     }
-
   }
 }
 ```
@@ -101,7 +141,7 @@ terraform {
 
 Para la creación y organización de un script, se va a requerir de un <b>main</b> principal, donde estara declarado lo anterior mencionado y luego los componentes requeridos
 
-- Organización en modulos
+#### * Organización en modulos
 
 Se puede optar por tener una carpeta separada en modulos, donde se separara en carpetas cada compenente utilizado, de la siguiente manera:
 
@@ -113,33 +153,50 @@ Se puede optar por tener una carpeta separada en modulos, donde se separara en c
             |_variables.tf
 
 Este formato ayuda a la organización para poder encontrar, modificar o buscar datos necesarios a utilizar en el componente, en cada archivo podrán encontrar
-main: Definición del funcionamiento general del componente, para utilizar los valores de entrada definidos en "variables" se tendrá que utilizar "var.name_variable".
-outputs: Variables de salida
-variables: Variables de entrada
 
-- Organización por archivos
+- main: Definición del funcionamiento general del componente, para utilizar los valores de entrada definidos en "variables" se tendrá que utilizar "var.name_variable".
+- outputs: Variables de salida
+- variables: Variables de entrada
 
-Por otro lado, se puede optar por tener los archivos con el nombramiento de cada uno para definir el funcionamiento, y reutilizar los nombres creados para cada componente en los demás, sin la necesidad de utilizar variables en el medio.
+#### * Organización por archivos
+
+Por otro lado, se puede optar por tener los archivos con el nombramiento de cada componente para definir el funcionamiento, y reutilizar los parametros creados para cada componente en los demás, sin la necesidad de utilizar variables en el medio.
 
 
 ### Correr el proyecto
 
-Se debe disponer de un archivo de variables de extension <i>.tfvvars</i> con las variables definidas en el archivo cloud/variables.tf. Como modelo del mismo se provee el archivo cloud/terraform.example.tfvars.
+Se debe dispone de un archivo de variables de extension <i>.tfvvars</i> con los nombres a utilizar para los componentes en cada script, si desea modificar los mismos podrá realizarlos dentro de este archivo sin la necesidad de ingresar a cada componente.
 
-Suponiendo que se cuenta con el archivo de variables en el path <i>path_variables</i>, para ejecutar el proyecto se deben realizar las siguientes instrucciones en una terminal situada en el directorio raiz del mismo:
+Para ejecutar el proyecto se deben realizar las siguientes instrucciones en una terminal situada en el directorio raiz del mismo:
 
 ```
 $ cd TPRedes
 
-$ terraform [-version] [-help] <command> [args]
+$ cd [nombreScript]
 
 $ terraform init
 
-$ terraform plan -var-file="path_variables"
+$ terraform plan 
 
-$ terraform apply -var-file="path_variables"
+$ terraform apply 
 ```
 
+El comando ```terraform init``` imprime la versión del proveedor Terraform instalada. También crea un archivo de bloqueo denominado .terraform.lock.hcl, que especifica las versiones exactas del proveedor utilizadas para garantizar que cada ejecución de Terraform sea coherente.
+
+Opcionalmente, podrá correr el comando ```terraform validate``` para asegurarse de que su configuración sea sintácticamente válida y coherente internamente.
+
+Con el comando ```terraform plan``` se genera y muestra un plan de ejecución de Terraform, indicando los cambios que se realizarán en la infraestructura sin aplicarlos aún.
+
+A partir de ```terraform apply``` se indicará qué cambios de infraestructura se planeo realizar y solicitará su aprobación antes de realizar esos cambios. Si el plan le parece aceptable, podrá escribir ```yes``` en el mensaje de confirmación para continuar. Es posible que Terraform tarde unos minutos en aprovisionar la red.
+
+```
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+```
+
+Luego de visualizar el mensaje anterior, ya ha creado infraestructura utilizando Terraform!
+
+
+Adicionalmente, si desea destruir el proyecto, tendrá la posibilidad de realizarlo a partir del comando ```terraform destroy``` que elimina todos los recursos gestionados por la configuración de Terraform.
 
 ### Módulos utilizados
 
@@ -167,6 +224,9 @@ Huawei Cloud:
 - <b>ELB:</b> Utilizado para distribuir automáticamente el tráfico de red entrante entre múltiples instancias de ECS.
 
 ### Diagrama de arquitectura
+
+En el proyecto se realizaron las siguientes aplicaciones, podrá reutilizar las soluciones implementadas en el proyecto. 
+
 
 ![multi-region](./diagramas/MultiRegion.png)
 
