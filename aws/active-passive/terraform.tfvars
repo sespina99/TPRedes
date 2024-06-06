@@ -1,6 +1,6 @@
 aws_region           = "us-east-1"
 vpc_name             = "active-passive-vpc"
-vpc_cidr_block       = "10.1.0.0/16"
+vpc_cidr_block       = "10.0.0.0/16"
 domain_name          = "tech-demo.tech"
 subdomain            = "www"
 ttl                  = "10"

@@ -2,7 +2,7 @@ module "vpc" {
   source = "../modules/vpc"
 
   cidr_block = "10.0.0.0/16"
-  vpc_name   = "active-vpc"
+  vpc_name   = var.vpc_name
 
   azs                  = ["us-east-1a", "us-east-1b"]
   private_subnet_cidrs = []
