@@ -1,4 +1,4 @@
-variable"domain_name" {
-    type        = string
+variable "domain_name" {
+  type        = string
   description = "The domain name for the website"
 }

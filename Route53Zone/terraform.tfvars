@@ -1,1 +1,1 @@
-domain_name  = "redes-grupo25.com.ar"
+domain_name = "redes-grupo25.com.ar"

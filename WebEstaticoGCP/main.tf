@@ -1,20 +1,20 @@
 provider "google" {
-  project = "regal-extension-425019-n0"
+  project = var.proyect
   region  = "us-central1"
   zone    = "us-central1-c"
 }
 
 provider "google-beta" {
-  project = "regal-extension-425019-n0"
+  project = var.proyect
   region  = "us-central1"
   zone    = "us-central1-c"
 }
 
 resource "google_storage_bucket" "website" {
   provider = google
-  name     = "grupo25-website"
+  name     = var.bucket_name
   location = "US"
-  
+
   website {
     main_page_suffix = "index.html"
     not_found_page   = "404.html"
@@ -24,24 +24,24 @@ resource "google_storage_bucket" "website" {
   }
 
   cors {
-    origin = ["*"]
-    method = ["GET", "HEAD", "PUT", "POST", "DELETE"]
+    origin          = ["*"]
+    method          = ["GET", "HEAD", "PUT", "POST", "DELETE"]
     response_header = ["Content-Type"]
     max_age_seconds = 3600
   }
 }
 
 resource "google_storage_bucket_object" "index" {
-  name   = "index.html"
-  source = "index.html"
-  bucket = google_storage_bucket.website.name
+  name         = "index.html"
+  source       = "index.html"
+  bucket       = google_storage_bucket.website.name
   content_type = "text/html"
 }
 
 resource "google_storage_bucket_object" "error" {
-  name   = "404.html"
-  source = "error.html"
-  bucket = google_storage_bucket.website.name
+  name         = "404.html"
+  source       = "error.html"
+  bucket       = google_storage_bucket.website.name
   content_type = "text/html"
 }
 
@@ -63,7 +63,7 @@ resource "google_compute_global_address" "website" {
 }
 
 data "google_dns_managed_zone" "gcp_grupo25_dev" {
-  name        = "gcp-grupo-25-com"
+  name = "gcp-grupo-25-com"
 }
 
 # Add the IP to the DNS

@@ -24,7 +24,6 @@ module "route53" {
   ttl                  = var.ttl
   primaryhealthcheck   = var.primaryhealthcheck
   secondaryhealthcheck = var.secondaryhealthcheck
-  subdomain            = var.subdomain
   identifier1          = var.identifier1
   identifier2          = var.identifier2
   primaryip            = module.ec2.public_ip_primary
