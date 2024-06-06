@@ -78,6 +78,8 @@ AWS_SESSION_TOKEN= **
 
 Si se encuentra desde <b>Huawei Cloud</b>, debe crear las llaves  de acceso necesarias. Desde la consola, encontrará el menu "Mis credenciales" en donde podra crear un nuevo par de access_key_id:secret_access_key. Luego de haber creado el par desde la consola se descargara en su PC un archivo "credentials.csv" con las credenciales adentro.
 
+![my-credentials-menu](./diagramas/huawei-MyCredentials.png)
+
 Posteriormente, deberá configurar las siguientes variables de entorno: 
 ```
 $ exportar HW_REGION_NAME="cn-norte-1"
@@ -280,7 +282,7 @@ Es necesario esperar a que se haga el cambio de los nameservers para luego poder
 En el proyecto se realizaron las siguientes aplicaciones, podrá reutilizar las soluciones implementadas en el proyecto. 
 
 
-![multi-region](./diagramas/MultiRegion.png)
+![huawei-network-deploy](./diagramas/huawei_network_deploy.png)
 
 ![high-availability](./diagramas/HighAvailability.png)
 
