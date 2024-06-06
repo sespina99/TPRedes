@@ -1,0 +1,5 @@
+huawei_region = "la-south-2"
+vpc_name = "vpc_network_deploy"
+cidr_block = "10.0.0.0/16"
+access_key = "6XELEYR0UJKQND0B4QXH"
+secret_key = "h8cvDLPuBeNXwXbO2iyNTmCNfR99Ue0bto33swGN"
