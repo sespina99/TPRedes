@@ -85,6 +85,10 @@ $ exportar HW_ACCESS_KEY="mi-clave-de-acceso"
 $ exportar HW_SECRET_KEY="mi-clave-secreta"
 ```
 
+Alternativamente, es posible setear las claves como variables dentro de un archivo .tfvars que sera usado por terraform para levantar los recursos en su cuenta.
+
+### GCP
+
 Si se encuentra dentro de <b>GCP</b> debe crearse un usuario de GCP con su cuenta de google. Una vez creada su cuenta, la forma más segura de correr terraform con gcp desde su máquina local es descargando gcp.
 Una vez descargado gcp correr el siguiente comando en la terminal:
 
@@ -152,7 +156,7 @@ Se puede optar por tener una carpeta separada en modulos, donde se separara en c
             |_output.tf
             |_variables.tf
 
-Este formato ayuda a la organización para poder encontrar, modificar o buscar datos necesarios a utilizar en el componente, en cada archivo podrán encontrar
+Este formato ayuda a la organización para poder encontrar, modificar o buscar datos necesarios a utilizar en el componente, en cada archivo podrán encontrar. Adicionalmente permite reutilizar los modulos para diferentes combinaciones de infraestructura segun sea necesario
 
 - main: Definición del funcionamiento general del componente, para utilizar los valores de entrada definidos en "variables" se tendrá que utilizar "var.name_variable".
 - outputs: Variables de salida
@@ -222,6 +226,10 @@ Huawei Cloud:
 - <b>VPC:</b> Utilizado para crear una red virtual en la arquitectura que contiene las capas de aplicación y base de datos del proyecto, junto con todas sus componentes (subnets, cidrs, etc).
 - <b>ECS:</b> Utilizado para ejecutar las instancias del sitio web. 
 - <b>ELB:</b> Utilizado para distribuir automáticamente el tráfico de red entrante entre múltiples instancias de ECS.
+### Scripts disponibles
+Dentro de este repositorio van a poder encontrar distintos scripts para levantar las distintas infraestructuras solicitadas en la consigna. En cada carpeta podremos encontrar los siguientes scripts:
+- <b>aws</b>: dentro de esta carpeta se pueden encontrar dos scripts diferentes. El primer script ubicado en la carpeta "network_deploy" hara el deploy de una red en aws, esto consiste en una vpc con subredes tanto publicas como privadas en su interior. El segundo script ubicado en la carpeta "active-passive" realizara el deploy de un ambiente activo pasivo manejado por el servicio de dns Route 53. Los diagramas de arquitectura para cada configuracion se podran encontrar al final de este documento
+- <b>huawei</b>: dentro de esta carpeta se podran encontrar 2 scripts. El primero ubicado en la carpeta network_deploy levantar una red en Huawei Cloud mientras que la segunda carpeta llamada high-availability levantar una vpc con subredes multi AZ y webservers en cada subred cuyo trafico es manejado por un load balancer.
 
 
 ## Deploy de Sitio Web Estático
