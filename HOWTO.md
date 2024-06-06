@@ -293,7 +293,7 @@ Para tener un mejor entendimiento de los scripts disponibles, se realizaron los 
 
 ### Solución Ambiente Activo-Pasivo 
 
-![multi-region](./diagramas/MultiRegion.png)
+![active-passive](./diagramas/active-passive.png)
 
 ### Solución Sitio Web Estatico
 
