@@ -16,3 +16,17 @@ huawei/modules/vpc/.terraform/providers/registry.terraform.io/huaweicloud/huawei
 huawei/modules/vpc/.terraform/providers/registry.terraform.io/huaweicloud/huaweicloud/1.64.2/windows_amd64/README.md
 
 huawei/modules/vpc/.terraform/providers/registry.terraform.io/huaweicloud/huaweicloud/1.64.2/windows_amd64/terraform-provider-huaweicloud_v1.64.2.exe
+
+aws/active-passive/.terraform.lock.hcl
+
+*.json
+
+*.tfstate
+
+*.backup
+
+aws/active-passive/.terraform/providers/registry.terraform.io/hashicorp/aws/4.67.0/windows_amd64/terraform-provider-aws_v4.67.0_x5.exe
+
+aws/network_deploy/.terraform.lock.hcl
+
+aws/network_deploy/.terraform/providers/registry.terraform.io/hashicorp/aws/4.67.0/windows_amd64/terraform-provider-aws_v4.67.0_x5.exe
