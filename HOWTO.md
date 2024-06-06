@@ -76,7 +76,7 @@ AWS_SESSION_TOKEN= **
 
 ### Huawei Cloud
 
-Si se encuentra desde <b>Huawei Cloud</b>, debe crear las llaves  de acceso necesarias. Desde la consola, encontrará en el menú sus credenciales, luego podra crear un Access key a partir de el código de verificación o contraseña.
+Si se encuentra desde <b>Huawei Cloud</b>, debe crear las llaves  de acceso necesarias. Desde la consola, encontrará el menu "Mis credenciales" en donde podra crear un nuevo par de access_key_id:secret_access_key. Luego de haber creado el par desde la consola se descargara en su PC un archivo "credentials.csv" con las credenciales adentro.
 
 Posteriormente, deberá configurar las siguientes variables de entorno: 
 ```
