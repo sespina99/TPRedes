@@ -12,11 +12,11 @@ output "nat_gateway_public_ips" {
 }
 
 output "nat_gateway_a_id" {
-  value = aws_nat_gateway.nat_a.id
+  value       = aws_nat_gateway.nat_a.id
   description = "IDs of the NAT gateways"
 }
 
 output "nat_gateway_b_id" {
-  value = aws_nat_gateway.nat_b.id
+  value       = aws_nat_gateway.nat_b.id
   description = "IDs of the NAT gateways"
 }

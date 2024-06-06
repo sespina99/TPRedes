@@ -30,7 +30,7 @@ resource "aws_security_group" "sg_for_ec2" {
   ingress {
     description     = "Allow http request from Load Balancer"
     protocol        = "tcp"
-    from_port       = 80 
+    from_port       = 80
     to_port         = 80
     security_groups = [aws_security_group.sg_for_elb.id]
   }

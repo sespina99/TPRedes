@@ -27,9 +27,9 @@ resource "aws_launch_template" "redes_launches" {
 }
 
 resource "aws_autoscaling_group" "redes_asg" {
-  desired_capacity    = var.desired_capacity
-  max_size            = var.max_size
-  min_size            = var.min_size
+  desired_capacity = var.desired_capacity
+  max_size         = var.max_size
+  min_size         = var.min_size
 
   target_group_arns   = [var.lb_target_group_arn]
   vpc_zone_identifier = [var.subnet_private_a_id, var.subnet_private_b_id]
