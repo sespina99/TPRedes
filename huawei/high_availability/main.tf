@@ -3,8 +3,8 @@
 module "vpc" {
   source = "../modules/vpc"
 
-  name       = local.vpc
-  cidr_block = local.cidr_block
+  name       = var.vpc_name
+  cidr_block = var.cidr_block
   region     = var.huawei_region
 }
 

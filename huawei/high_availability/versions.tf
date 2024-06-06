@@ -8,7 +8,7 @@ terraform {
 }
 
 provider "huaweicloud" {
-  region     = local.region
-  access_key = local.access_key_id
-  secret_key = local.secret_key
+  region     = var.huawei_region
+  access_key = var.access_key
+  secret_key = var.secret_key
 }
