@@ -245,41 +245,14 @@ Dentro de este repositorio van a poder encontrar distintos scripts para levantar
 
 - <b>high availability</b>: dentro de esta carpeta podrá encontrar un script que implementa una VPC con subredes distribuidas en múltiples zonas de disponibilidad (multi-AZ). El script también despliega un sitio web sencillo en cada una de estas subredes. Un load balancer que se encarga de gestionar el tráfico entrante, garantizando que si una de las instancias o zonas de disponibilidad falla, el tráfico se redirija a las instancias disponibles restantes. Esto asegura que el sitio web mantenga su disponibilidad y rendimiento óptimo incluso en caso de fallos en alguna parte de la infraestructura.
 
-- <b>route 53 zone:</b> dentro de esta carpeta podrá encontrar un script, este es el primer paso para poder hostear sitios estaticos, ya que se requiere de tener la zona dns para poder luego verificar el certificado SSL, esta parte requiere hacer cosas fuera de terraform.
-  Una vez que se deployó la Hosted Zone, uno debe entrar al servicio de Route 53 en la consola de AWS, seleccionar la hosted Zone creada y copiar los records NS.
+- <b>route 53 zone:</b> antes de desplegar la hosted zone es necesario tener un domino propio. Dentro de esta carpeta podrá encontrar un script, este es el primer paso para poder hostear sitios estaticos, ya que se requiere de tener la zona dns para poder luego verificar el certificado SSL, esta parte requiere hacer cosas fuera de terraform.
+  Una vez que se desplegó la Hosted Zone, uno debe entrar al servicio de Route 53 en la consola de AWS, seleccionar la hosted Zone creada y copiar los records NS.
 Una vez copiados ir a donde sea que tiene su domino registrado y registrarle a su dominio los nameservers por los que copió.
   
-- <b>web-static-aws</b>:
+- <b>web-static-aws</b>: dentro de esta carpeta se encuentra el script que despliega el sitio web estatico en un bucket S3. Este script también despliega Cloudfront y le da una policy al bucket para ser privado y solamente accedido desde cloudfront. De esta manera se puede controlar el tráfico que le llega al bucket. También se conecta al cloudfront con la Hosted Zone creando los records debidos para redireccionar el tráfico desde el dominio hacia el Cloudfront mediante DNS. Por último también se crea un certificado SSL que garantiza que la conexión sea HTTPS.
+Recordar correr el script de la carpeta route 53 zone primero y utilizar el mismo nombre de dominio en ese script y en este.
 
-- <b>web-static-gcp</b>:
-
-## Deploy de Sitio Web Estático
-### AWS
-#### Arquitectura
-
-#### Requisitos
-Se requiere tener un dominio propio.
-#### Pasos
-- <b>Zona DNS:</b> Este es el primer paso ya que se requiere de tener la zona dns para poder luego verificar el certificado SSL, esta parte requiere hacer cosas fuera de terraform.
-
-Pararse en la carpeta Route53Zone ver las variables del archivo tfvars en esa carpeta y modificarlas para poner su nombre de dominio.  y correr el init y el apply.
-  
-  
-Una vez que se deployó la Hosted Zone, uno debe entrar al servicio de Route 53 en la consola de AWS, seleccionar la hosted Zone creada y copiar los records NS.
-Una vez copiados ir a donde sea que tiene su domino registrado y registrarle a su dominio los nameservers por los que copió.
-
-Es necesario esperar a que se haga el cambio de los nameservers para luego poder validar el certificado SSL, esto dependiendo el servicio que utilizó para el domino puede tardar hasta unas 24 horas.
-
-- <b>Deploy del Web Estático:</b> Como ya está creada la zona dns, se puede pasar a deployear lo demás. Parándose en la carpeta de WebEstáticoAWS, correr el init y el apply, importante en el tfvars poner el mismo nombre de domino que se utilizó para crear la Hosted Zone.
-
-### GCP
-#### Arquitectura
-
-
-#### Pasos
-- <b>Dominio:</b>El primer paso es registrar un domino en la consola de gcp en el servicio de Cloud Domains.
-
-- <b>Deploy del Web Estático:</b> Al registrar el domino en google cloud se crea automáticamente la zona DNS, por lo que se puede pasar a deployear el web estatico. Parándose en la carpeta de WebEstáticoGCP, correr el init y el apply, importante en el tfvars poner el mismo nombre de domino que se utilizó para registrar el domino en Cloud Domains y también especificar el nombre del proyecto donde quiere deployear los servicios.
+- <b>web-static-gcp</b>: dentro de esta carpeta se encuentra el script que despliega el web estático en GCP. Antes de correr el script el usuario debe registrar un dominio en la consola de gcp en el servicio de Cloud Domains. Una vez registrado en gcp se crea automáticamente una zona DNS, por lo que estamos listos para correr el script. El script crea el storage bucket con los archivos estaticos del sitio web. Crea un origin en la CDN con un bucket bucket que apúnta al storage bucket. Mediante un proxy https redirecciona el tráfico hacia el backend bucket con HTTPS.
 
 
 
