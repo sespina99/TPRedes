@@ -33,7 +33,10 @@ o descargar `.zip` desde [github](https://github.com/sespina99/TPRedes)
 
 ## Obtener credenciales
 
-Si se encuentra desde la cuenta <b>Academy de AWS </b>, previamente se deben setear las credenciales correspondientes de AWS en el archivo que podrá encontrar en:
+Si se encuentra desde <b>AWS Academy</b>, podrán encontrar las credenciales al inicializar el Learner Lab, y ver los detalles de AWS, encontrando 
+
+ previamente se deben setear las credenciales correspondientes de AWS en el archivo que podrá encontrar en:
+
 Mac/Linux:
 ```
 ~/.aws/credentials
